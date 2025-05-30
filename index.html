@@ -1,0 +1,304 @@
+<head>
+  <title>SCBD DASHBOARD-Corporate Scorecard</title>
+  <link
+    rel="icon"
+    href="https://lh3.googleusercontent.com/pw/AP1GczNzXltTdYmjKPMGA8w38Qw1ifkNiUgNUaYy8aiQZ-SNVKhukRLkd4O3-1FrjTAvHPHruS0aZ1ARiS-DtyB-1KIPWT8SMw7U61OsOUn8Dqnqsh3M_TT5Ow7ZwFIkGRXWxcASSNEW-Sstxx07SaXeUeQj=w32-h32-s-no-gm?authuser=0"
+    type="x-icon"
+  />
+
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    #wrapper {
+      transform-origin: top left;
+      width: 1366px;
+      height: 768px;
+      transform: scale(1);
+    }
+
+    select#menuSelect {
+      animation: glowPulse 2s infinite;
+    }
+
+    iframe {
+      animation: fadeInIframe 0.75s ease-in-out;
+    }
+
+    #TopLayer {
+      animation: fadeDark 1s ease-in-out;
+    }
+
+    @keyframes fadeInIframe {
+      from {
+        opacity: 0;
+        transform: scale(0);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes fadeDark {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+
+    @keyframes glowPulse {
+      0%,
+      100% {
+        box-shadow: 0 0 10px #ffd700, 0 0 20px #ffd700;
+        border-color: #ffd700;
+      }
+      50% {
+        box-shadow: 0 0 5px #ffeb3b, 0 0 15px #ffeb3b;
+        border-color: #ffeb3b;
+      }
+    }
+  </style>
+
+  <script>
+    const password = prompt("Enter password: (Sementara dapat dikosongkan)");
+    if (password !== "") {
+      document.documentElement.innerHTML = ""; // Hapus semua konten HTML
+      document.body.innerHTML = "<h1 style='color: red; text-align: center; margin-top: 20%; font-family: sans-serif;'>Unauthorized access!</h1>"
+      throw new Error("Unauthorized access");
+    }
+  </script>
+</head>
+
+<body>
+  <div id="wrapper">
+    <!-- Dropdown Pilih Data -->
+    <div style="position: absolute; top: 2%; left: 11%; z-index: 998">
+      <select
+        id="menuSelect"
+        style="
+          font-family: Tahoma, sans-serif;
+          font-size: 16px;
+          padding: 3px 6px;
+          border: 2px solid #ffeb3b;
+          border-radius: 8px;
+          background: #000;
+          color: #fff;
+          cursor: pointer;
+          display: none;
+        "
+      >
+        <option value="select-dashboard" selected>
+          -- Select Dashboard --
+        </option>
+        <option value="corporate-scorecard">Corporate Scorecard</option>
+        <option value="project-management">Project Management</option>
+        <option id="countdownLoop" value="infinite-loop">Infinite Loop</option>
+      </select>
+    </div>
+
+    <!-- Info to quit fullscreen -->
+    <div
+      id="infoQuitFullscreen"
+      style="
+        position: absolute;
+        top: 6.5%;
+        left: 13.7%;
+        width: 350px;
+        z-index: 999;
+        font-size: 14px;
+        font-style: italic;
+        color: white;
+        display: none;
+      "
+    >
+      Press Esc to exit.
+    </div>
+
+    <!-- Iframe untuk Menampilkan Konten -->
+    <iframe
+      id="LatarBelakang"
+      style="
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        border: 0;
+        position: fixed;
+        display: none;
+      "
+      frameborder="0"
+      scrolling="no"
+      src="https://lh3.googleusercontent.com/pw/AP1GczM6rLrw9HUIOOiXAbMHzbFEJ7wIlmcFAYd9x4hUTS-ikrDLLKT2F9TX8mBXMUXd78DsSayPYrRZuxe9JuBsW9QA3UeC8PESn5Z3ivr5h1p6Z2FRgIi9R1A9HvO4Ca9qQ81YRVhNk5LopmBloe88w3rX=w1366-h911-s-no-gm?authuser=0"
+    ></iframe>    
+    
+    <iframe
+      id="ShowcaseCSC"
+      style="
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        border: 0;
+        position: fixed;
+        display: none;
+      "
+      frameborder="0"
+      scrolling="no"
+      src="https://csc-2025.glitch.me"
+    ></iframe>
+
+    <iframe
+      id="ShowcasePM"
+      style="
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        border: 0;
+        position: fixed;
+        display: none;
+      "
+      frameborder="0"
+      scrolling="no"
+      src="https://scbd-project.glitch.me"
+    ></iframe>
+
+    <!-- Layer Hitam jika bukan waktu Show Time -->
+    <iframe
+      id="TopLayer"
+      style="
+        width: 100%;
+        height: 100%;
+        top: 0px;
+        left: 0px;
+        border: 0;
+        position: absolute;
+        background-color: #000;
+        opacity: 1;
+        z-index: 999;
+        display: none;
+      "
+    ></iframe>
+
+    <script>
+      const userAgent = navigator.userAgent.toLowerCase();
+      const isMobile =
+        userAgent.includes("mobile") ||
+        userAgent.includes("android") ||
+        userAgent.includes("iphone");
+      window.addEventListener("load", scalePage);
+      window.addEventListener("resize", scalePage);
+
+      const menuSelect = document.getElementById("menuSelect");
+      const infoQuitFullscreen = document.getElementById("infoQuitFullscreen");
+      const LatarBelakang = document.getElementById("LatarBelakang");
+      const showCaseCSC = document.getElementById("ShowcaseCSC");
+      const showCasePM = document.getElementById("ShowcasePM");
+      const countdownLoop = document.getElementById("countdownLoop");
+      const TopLayer = document.getElementById("TopLayer");
+
+      let currentSRC = "corporate-scorecard";
+      let intervalID;
+      let countdown;
+      let countdownID;
+
+      menuSelect.addEventListener("change", function () {
+        if (menuSelect.options.length > 3) menuSelect.remove(0);
+
+        clearInterval(intervalID);
+        clearInterval(countdownID);
+        countdownLoop.textContent = "Infinite Loop";
+        infoQuitFullscreen.style.display = "block";
+        LatarBelakang.style.opacity = 0.5;
+
+        if (this.value === "corporate-scorecard") {
+          showCaseCSC.style.display = "block";
+          showCasePM.style.display = "none";
+          showCasePM.src =
+            "https://scbd-project.glitch.me/?update=" + Date.now();
+          document.title = "SCBD DASHBOARD-Corporate Scorecard";
+        } else if (this.value === "project-management") {
+          showCasePM.style.display = "block";
+          showCaseCSC.style.display = "none";
+          showCaseCSC.src = "https://csc-2025.glitch.me/?update=" + Date.now();
+          document.title = "SCBD DASHBOARD-Project Management";
+        } else {
+          loopDashboard();
+          intervalID = setInterval(loopDashboard, 62000);
+        }
+
+        goFullscreen();
+      });
+
+      function loopDashboard() {
+        clearInterval(countdownID);
+        if (currentSRC === "corporate-scorecard") {
+          showCaseCSC.style.display = "block";
+          showCasePM.style.display = "none";
+          showCasePM.src =
+            "https://scbd-project.glitch.me/?update=" + Date.now();
+          document.title = "SCBD DASHBOARD-Corporate Scorecard";
+          currentSRC = "project-management";
+        } else {
+          showCasePM.style.display = "block";
+          showCaseCSC.style.display = "none";
+          showCaseCSC.src = "https://csc-2025.glitch.me/?update=" + Date.now();
+          document.title = "SCBD DASHBOARD-Project Management";
+          currentSRC = "corporate-scorecard";
+        }
+
+        const now = new Date();
+        const hours = now.getHours();
+        const minutes = now.getMinutes();
+        const currentTime = hours * 60 + minutes;
+        const startTime = 7 * 60 + 30;
+        const endTime = 16 * 60 + 25;
+
+        TopLayer.style.display =
+          currentTime >= startTime && currentTime <= endTime ? "none" : "block";
+
+        countdown = 60;
+        countdownID = setInterval(function () {
+          countdownLoop.textContent = "Infinite Loop (" + countdown + ")";
+          countdown = Math.max(countdown - 1, 0);
+        }, 1000);
+      }
+
+      function scalePage() {
+        const baseWidth = 1366;
+        const baseHeight = 768;
+        const scaleX = window.innerWidth / baseWidth;
+        const scaleY = window.innerHeight / baseHeight;
+        const scale = Math.min(scaleX, scaleY);
+
+        const wrapper = document.getElementById("wrapper");
+        wrapper.style.transform = `scale(${scale})`;
+        LatarBelakang.style.display = "block";
+        menuSelect.style.display = "block";
+      }
+
+      function goFullscreen() {
+        if (!isMobile) {
+          if (document.documentElement.requestFullscreen) {
+            document.documentElement.requestFullscreen();
+          } else if (document.documentElement.mozRequestFullScreen) {
+            document.documentElement.mozRequestFullScreen();
+          } else if (document.documentElement.webkitRequestFullscreen) {
+            document.documentElement.webkitRequestFullscreen();
+          } else if (document.documentElement.msRequestFullscreen) {
+            document.documentElement.msRequestFullscreen();
+          }
+        }
+      }
+    </script>
+  </div>
+</body>
