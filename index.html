@@ -309,6 +309,7 @@
     // Trigger event "change" supaya logika yang sama berjalan
     const event = new Event("change", { bubbles: true, cancelable: true });
     menuSelect.dispatchEvent(event);
+    goFullscreen();
   }
     </script>
   </div>
