@@ -69,7 +69,7 @@
   </style>
 
   <script>
-            // Periksa apakah href mengandung "/loop"
+  // Periksa apakah href mengandung "/loop"
   if (!window.location.href.includes("/loop")) {
     const password = prompt("Enter password: (Sementara dapat dikosongkan)");
     if (password !== "") {
@@ -213,13 +213,6 @@
       let intervalID;
       let countdown;
       let countdownID;
-
-        // Periksa apakah href mengandung "/loop"
-  if (window.location.href.includes("/loop")) {
-    menuSelect.value = "infinite-loop";
-    // Trigger event "change" supaya logika yang sama berjalan
-    menuSelect.dispatchEvent(new Event("change"));
-  }
       
       menuSelect.addEventListener("change", function () {
         if (menuSelect.options.length > 3) menuSelect.remove(0);
@@ -309,6 +302,13 @@
           }
         }
       }
+
+  // Periksa apakah href mengandung "/loop"
+  if (window.location.href.includes("/loop")) {
+    menuSelect.value = "infinite-loop";
+    // Trigger event "change" supaya logika yang sama berjalan
+    menuSelect.dispatchEvent(new Event("change"));
+  }
     </script>
   </div>
 </body>
