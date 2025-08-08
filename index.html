@@ -211,6 +211,13 @@
       let countdown;
       let countdownID;
 
+        // Periksa apakah href mengandung "/loop"
+  if (window.location.href.includes("/loop")) {
+    menuSelect.value = "infinite-loop";
+    // Trigger event "change" supaya logika yang sama berjalan
+    menuSelect.dispatchEvent(new Event("change"));
+  }
+      
       menuSelect.addEventListener("change", function () {
         if (menuSelect.options.length > 3) menuSelect.remove(0);
 
