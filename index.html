@@ -305,7 +305,7 @@
 
   // Periksa apakah href mengandung "/loop"
   if (window.location.href.includes("/loop")) {
-    menuSelect.value = "pinfinite-loop";
+    menuSelect.value = "infinite-loop";
     // Trigger event "change" supaya logika yang sama berjalan
     const event = new Event("change", { bubbles: true, cancelable: true });
     menuSelect.dispatchEvent(event);
