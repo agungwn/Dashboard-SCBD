@@ -69,12 +69,15 @@
   </style>
 
   <script>
+            // Periksa apakah href mengandung "/loop"
+  if (!window.location.href.includes("/loop")) {
     const password = prompt("Enter password: (Sementara dapat dikosongkan)");
     if (password !== "") {
       document.documentElement.innerHTML = ""; // Hapus semua konten HTML
       document.body.innerHTML = "<h1 style='color: red; text-align: center; margin-top: 20%; font-family: sans-serif;'>Unauthorized access!</h1>"
       throw new Error("Unauthorized access");
     }
+  }
   </script>
 </head>
 
