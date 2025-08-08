@@ -305,11 +305,11 @@
 
   // Periksa apakah href mengandung "/loop"
   if (window.location.href.includes("/loop")) {
+    goFullscreen();
     menuSelect.value = "infinite-loop";
     // Trigger event "change" supaya logika yang sama berjalan
     const event = new Event("change", { bubbles: true, cancelable: true });
     menuSelect.dispatchEvent(event);
-    goFullscreen();
   }
     </script>
   </div>
