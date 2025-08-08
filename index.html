@@ -234,7 +234,7 @@
           showCaseCSC.style.display = "none";
           showCaseCSC.src = "https://agungwn.github.io/CSC-KCE/?update=" + Date.now();
           document.title = "SCBD DASHBOARD-Project Management";
-        } else {
+        } else if (this.value === "infinite-loop") {
           loopDashboard();
           intervalID = setInterval(loopDashboard, 62000);
         }
@@ -305,9 +305,10 @@
 
   // Periksa apakah href mengandung "/loop"
   if (window.location.href.includes("/loop")) {
-    menuSelect.value = "project-management";
+    menuSelect.value = "pinfinite-loop";
     // Trigger event "change" supaya logika yang sama berjalan
-    menuSelect.dispatchEvent(new Event("change"));
+    const event = new Event("change", { bubbles: true, cancelable: true });
+    menuSelect.dispatchEvent(event);
   }
     </script>
   </div>
